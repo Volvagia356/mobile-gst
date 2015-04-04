@@ -27,31 +27,35 @@ class FWDC(requests.Session):
         self.after_request(r)
         return r
 
+class GST():
+    def __init__(self):
+        self.fwdc = FWDC()
 
-s = FWDC()
+    def load_front_page(self):
+        self.fwdc.get("https://gst.customs.gov.my/TAP/_/")
+        self.fwdc.get("https://gst.customs.gov.my/TAP/_/", params={'Load': "1"})
 
-r = s.get("https://gst.customs.gov.my/TAP/_/")
-r = s.get("https://gst.customs.gov.my/TAP/_/", params={'Load': "1"})
+    def click_lookup_gst_status(self):
+        data = {
+                'DOC_MODAL_ID__': "0",
+                'EVENT__': "b-i",
+                'TYPE__': "0",
+                }
+        self.fwdc.post("https://gst.customs.gov.my/TAP/_/EventOccurred", data=data)
 
-data = {
-        'DOC_MODAL_ID__': "0",
-        'EVENT__': "b-i",
-        'TYPE__': "0",
-        }
-r = s.post("https://gst.customs.gov.my/TAP/_/EventOccurred", data=data)
+    def select_gst_num_radio(self):
+        data = {
+                'd-3': "true",
+                'DOC_MODAL_ID__': "0",
+                }
+        self.fwdc.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
 
-data = {
-        'd-3': "true",
-        'DOC_MODAL_ID__': "0",
-        }
-r = s.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
+    def enter_gst_num(self, gst_num):
+        data = {
+                'd-5': gst_num,
+                'DOC_MODAL_ID__': "0",
+                }
+        r = self.fwdc.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
+        r.encoding = "utf-8-sig"
+        return r.text
 
-data = {
-        'd-5': "001564901376",
-        'DOC_MODAL_ID__': "0",
-        }
-r = s.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
-
-json = loads(bytes(r.text, 'utf-8').decode('utf-8-sig'))
-
-print(json)
