@@ -1,6 +1,5 @@
 import requests
 from time import time
-from json import loads
 
 class FWDC(requests.Session):
     def __init__(self, *args, **kwargs):
@@ -57,5 +56,5 @@ class GST():
                 }
         r = self.fwdc.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
         r.encoding = "utf-8-sig"
-        return r.text
+        return r.json()
 
