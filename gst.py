@@ -43,21 +43,39 @@ class GST():
                 }
         self.fwdc.post("https://gst.customs.gov.my/TAP/_/EventOccurred", data=data)
 
-    def select_gst_num_radio(self):
+    def select_radio_button(self, button_id):
         data = {
-                'd-3': "true",
+                button_id: "true",
                 'DOC_MODAL_ID__': "0",
                 }
         self.fwdc.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
-
-    def enter_gst_num(self, gst_num):
+    
+    def enter_text_field(self, field_id, text):
         data = {
-                'd-5': gst_num,
+                field_id: text,
                 'DOC_MODAL_ID__': "0",
                 }
         r = self.fwdc.post("https://gst.customs.gov.my/TAP/_/Recalc", data=data)
         r.encoding = "utf-8-sig"
         return r.json()
+
+    def select_gst_num_radio(self):
+        self.select_radio_button("d-3")
+
+    def select_business_num_radio(self):
+        self.select_radio_button("d-6")
+
+    def select_business_name_radio(self):
+        self.select_radio_button("d-8")
+
+    def enter_gst_num(self, gst_num):
+        return self.enter_text_field("d-5", gst_num)
+
+    def enter_business_num(self, business_num):
+        return self.enter_text_field("d-7", business_num)
+
+    def enter_business_name(self, business_name):
+        return self.enter_text_field("d-9", business_name)
 
 def find_field_update(fwdc_response, field):
     for field_update in fwdc_response['Updates']['FieldUpdates']:
