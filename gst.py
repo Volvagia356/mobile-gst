@@ -77,15 +77,23 @@ class GST():
     def enter_business_name(self, business_name):
         return self.enter_text_field("d-9", business_name)
 
+class GSTError(Exception): pass
+
 def find_field_update(fwdc_response, field):
     for field_update in fwdc_response['Updates']['FieldUpdates']:
         if field_update['field'] == field:
             return field_update
 
+def is_field_visible(fwdc_response, field):
+    field_update = find_field_update(fwdc_response, field)
+    if field_update:
+        return field_update.get("visible", False)
+    return False
+
 def parse_business_table(table_html):
     FIELDS = ["gst_num", "name", "date", "status"]
     soup = BeautifulSoup(table_html)
-    rows = soup.tbody.find_all("tr", recursive=False)
+    rows = soup.tbody.find_all("tr", class_="DataRow", recursive=False)
     data = []
     for row in rows:
         cells = row.find_all("td", recursive=False)
@@ -98,7 +106,17 @@ def parse_business_table(table_html):
     return data
 
 def get_table_from_response(fwdc_response):
-    table_html = find_field_update(fwdc_response, "d-f")['value']
+    field_update = find_field_update(fwdc_response, "d-f")
+    if not field_update:
+        if is_field_visible(fwdc_response, "d-i"):
+            raise GSTError("No Registrants Found!")
+        elif is_field_visible(fwdc_response, "d-l"):
+            raise GSTError("Over 100 results found. Please narrow search terms!")
+        elif is_field_visible(fwdc_response, "d-n"):
+            raise GSTError("Server under maintenance. Please check back later!")
+        else:
+            raise GSTError("Unknown error occured!")
+    table_html = field_update['value']
     return parse_business_table(table_html)
 
 def prepare_GST():
