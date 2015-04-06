@@ -1,5 +1,6 @@
 import requests
 from time import time
+from bs4 import BeautifulSoup
 
 class FWDC(requests.Session):
     def __init__(self, *args, **kwargs):
@@ -58,3 +59,26 @@ class GST():
         r.encoding = "utf-8-sig"
         return r.json()
 
+def find_field_update(fwdc_response, field):
+    for field_update in fwdc_response['Updates']['FieldUpdates']:
+        if field_update['field'] == field:
+            return field_update
+
+def parse_business_table(table_html):
+    FIELDS = ["gst_num", "name", "date", "status"]
+    soup = BeautifulSoup(table_html)
+    rows = soup.tbody.find_all("tr", recursive=False)
+    data = []
+    for row in rows:
+        cells = row.find_all("td", recursive=False)
+        row_data = []
+        for cell in cells:
+            cell_data = cell.get_text()
+            row_data.append(cell_data)
+        row_dict = dict(zip(FIELDS, row_data))
+        data.append(row_dict)
+    return data
+
+def get_table_from_response(fwdc_response):
+    table_html = find_field_update(fwdc_response, "d-f")['value']
+    return parse_business_table(table_html)
