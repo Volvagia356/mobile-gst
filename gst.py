@@ -82,3 +82,11 @@ def parse_business_table(table_html):
 def get_table_from_response(fwdc_response):
     table_html = find_field_update(fwdc_response, "d-f")['value']
     return parse_business_table(table_html)
+
+def search_gst_num(gst_num):
+    s = GST()
+    s.load_front_page()
+    s.click_lookup_gst_status()
+    s.select_gst_num_radio()
+    response = s.enter_gst_num(gst_num)
+    return get_table_from_response(response)
