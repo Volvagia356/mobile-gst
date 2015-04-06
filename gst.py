@@ -101,10 +101,26 @@ def get_table_from_response(fwdc_response):
     table_html = find_field_update(fwdc_response, "d-f")['value']
     return parse_business_table(table_html)
 
-def search_gst_num(gst_num):
+def prepare_GST():
     s = GST()
     s.load_front_page()
     s.click_lookup_gst_status()
+    return s
+
+def search_gst_num(gst_num):
+    s = prepare_GST()
     s.select_gst_num_radio()
     response = s.enter_gst_num(gst_num)
+    return get_table_from_response(response)
+
+def search_business_num(business_num):
+    s = prepare_GST()
+    s.select_business_num_radio()
+    response = s.enter_business_num(business_num)
+    return get_table_from_response(response)
+
+def search_business_name(business_name):
+    s = prepare_GST()
+    s.select_business_name_radio()
+    response = s.enter_business_name(business_name)
     return get_table_from_response(response)
