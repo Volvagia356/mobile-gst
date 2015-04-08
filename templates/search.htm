@@ -1,0 +1,34 @@
+{% extends "template.htm" %}
+
+{% block title %}Search by {{ search_by }}{% endblock %}
+
+{% block content %}
+<form>
+    <div class="form-group">
+        <label for="value">Search by {{ search_by }}:</label>
+        <input type="text" class="form-control" id="value" name="value" placeholder="{{ search_by }}" value="{{ request.args.value }}" required />
+    </div>
+    <div class="form-group">
+        <input type="submit" class="form-control btn btn-primary" value="Search" />
+    </div>
+</form>
+{% if results or error %}
+<p><strong>Results:</strong>
+<div class="panel panel-default">
+    {% for result in results %}
+    <div class="panel-heading"
+        {% if loop.length > 1 %}data-toggle="collapse" data-target="#gst{{ result.gst_num }}"{% endif %}>
+        {{ result.name }}
+        {% if loop.length > 1 %}<span class="caret"></span>{% endif %}
+    </div>
+    {% if loop.length > 1 %}<div class="collapse" id="gst{{ result.gst_num }}">{% endif %}
+        <div class="panel-body">
+            GST Number: {{ result.gst_num }}
+            <br/>Date: {{ result.date }}
+            <br/>Status: {{ result.status }}
+        </div>
+    {% if loop.length > 1 %}</div>{% endif %}
+    {% endfor %}
+</div>
+{% endif %}
+{% endblock %}
