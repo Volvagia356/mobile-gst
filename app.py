@@ -19,6 +19,10 @@ def search_view(search_func, search_by):
 def index():
     return redirect("/gst-num")
 
+@app.route("/about")
+def about():
+    return render_template("about.htm")
+
 app.add_url_rule("/gst-num", "gst_num", search_view(gst.search_gst_num, "GST Number"))
 app.add_url_rule("/business-num", "business_num", search_view(gst.search_business_num, "Business Number"))
 app.add_url_rule("/business-name", "business_name", search_view(gst.search_business_name, "Business Name"))
