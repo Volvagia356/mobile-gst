@@ -7,11 +7,15 @@ app.config['SITE_NAME'] = "MobileGST"
 def search_view(search_func, search_by):
     def view():
         results = None
+        error = None
         try:
             if request.args['value']:
                 results = search_func(request.args['value'])
         except KeyError: pass
-        return render_template("search.htm", search_by=search_by, results=results)
+        except gst.GSTError as e:
+            error = e
+            print(repr(results))
+        return render_template("search.htm", search_by=search_by, results=results, error=error)
     return view
 
 

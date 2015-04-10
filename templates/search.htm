@@ -12,7 +12,12 @@
         <input type="submit" class="form-control btn btn-primary" value="Search" />
     </div>
 </form>
-{% if results or error %}
+{% if error %}
+<div class="alert alert-danger" role="alert">
+    {{ error }}
+</div>
+{% endif %}
+{% if results %}
 <p><strong>Results:</strong>
 <div class="panel panel-default">
     {% for result in results %}
