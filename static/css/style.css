@@ -22,3 +22,10 @@ h1 {
 .footer p {
     margin: 5px 0;
 }
+
+.navbar-brand img {
+    display: inline;
+    height: 24px;
+    padding-right: 0.5ch;
+    vertical-align: text-bottom;
+}
