@@ -1,0 +1,13 @@
+{
+    "name": "MobileGST",
+    "icons": [
+        {
+            "src": "img/android-icon-192px.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }
+    ],
+    "start_url": "/",
+    "display": "standalone",
+    "orientation": "portrait"
+}
