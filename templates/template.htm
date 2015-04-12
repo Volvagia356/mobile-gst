@@ -21,6 +21,8 @@
 
         <!-- Mobile WebApp -->
         <link rel="manifest" href="{{ url_for('static', filename='manifest.json') }}">
+        <meta name="mobile-web-app-capable" content="yes">
+        <link rel="icon" sizes="192x192" href="{{ url_for('static', filename='img/android-icon-192px.png')  }}">
     </head>
     <body>
         <nav class="navbar navbar-inverse">
