@@ -27,6 +27,9 @@
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="apple-mobile-web-app-status-bar-style" content="black">
         <script src="{{ url_for('static', filename='js/ios.js') }}"></script>
+        <meta name="application-name" content="MobileGST">
+        <meta name="msapplication-config" content="{{ url_for('static', filename='ieconfig.xml') }}">
+        <meta name="msapplication-starturl" content="/">
     </head>
     <body>
         <nav class="navbar navbar-inverse">
