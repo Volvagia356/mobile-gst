@@ -7,7 +7,7 @@ class FWDC(requests.Session):
         self.fwdc_data = {}
         self.fwdc_data['FAST_CLIENT_WINDOW__'] = "FWDC.WND-0000-0000-0000"
         self.fwdc_data['FAST_CLIENT_AJAX_ID__'] = 0
-        super().__init__(*args, **kwargs)
+        super(FWDC, self).__init__(*args, **kwargs)
 
     def before_request(self):
         self.fwdc_data['FAST_CLIENT_WHEN__'] = str(int(time()*1000))
@@ -24,7 +24,7 @@ class FWDC(requests.Session):
         self.before_request()
         if "params" not in kwargs: kwargs['params'] = {}
         kwargs['params'].update(self.fwdc_data)
-        r = super().get(*args, **kwargs)
+        r = super(FWDC, self).get(*args, **kwargs)
         self.after_request(r)
         return r
     
@@ -32,7 +32,7 @@ class FWDC(requests.Session):
         self.before_request()
         if "data" not in kwargs: kwargs['data'] = {}
         kwargs['data'].update(self.fwdc_data)
-        r = super().post(*args, **kwargs)
+        r = super(FWDC, self).post(*args, **kwargs)
         self.after_request(r)
         return r
 
