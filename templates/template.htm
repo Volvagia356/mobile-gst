@@ -30,6 +30,13 @@
         <meta name="application-name" content="MobileGST">
         <meta name="msapplication-config" content="{{ url_for('static', filename='ieconfig.xml') }}">
         <meta name="msapplication-starturl" content="/">
+
+        <!-- Facebook Open Graph -->
+        <meta property="og:url" content="http://mobile-gst.volzel.net/">
+        <meta property="og:type" content="website">
+        <meta property="og:title" content="MobileGST">
+        <meta property="og:description" content="Easily look up GST status on the go!">
+        <meta property="og:image" content="http://mobile-gst.volzel.net{{ url_for('static', filename='img/facebook-og-icon.png') }}">
     </head>
     <body>
         <nav class="navbar navbar-inverse">
