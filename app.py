@@ -2,7 +2,7 @@ from flask import Flask, render_template, redirect, request
 import gst
 
 app = Flask(__name__)
-app.config['SITE_NAME'] = "MobileGST"
+app.config['SITE_NAME'] = "GST Ninja"
 
 def search_view(search_func, search_by):
     def view():
