@@ -116,13 +116,13 @@ def parse_business_table(table_html):
     return data
 
 def get_table_from_response(fwdc_response):
-    field_update = find_field_update(fwdc_response, "d-f")
+    field_update = find_field_update(fwdc_response, "d-g")
     if not field_update:
-        if is_field_visible(fwdc_response, "d-i"):
+        if is_field_visible(fwdc_response, "d-j"):
             raise GSTError("No Registrants Found!")
-        elif is_field_visible(fwdc_response, "d-l"):
+        elif is_field_visible(fwdc_response, "d-m"):
             raise GSTError("Over 100 results found. Please narrow search terms!")
-        elif is_field_visible(fwdc_response, "d-n"):
+        elif is_field_visible(fwdc_response, "d-o"):
             raise GSTError("Server under maintenance. Please check back later!")
         else:
             raise GSTError("Unknown error occured!")
