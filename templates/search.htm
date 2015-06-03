@@ -23,12 +23,13 @@
     {% for result in results %}
     <div class="panel-heading"
         {% if loop.length > 1 %}data-toggle="collapse" data-target="#result{{ loop.index0 }}"{% endif %}>
-        {{ result.name }}
+        {{ result.legal_name }}
         {% if loop.length > 1 %}<span class="caret"></span>{% endif %}
     </div>
     {% if loop.length > 1 %}<div class="collapse" id="result{{ loop.index0 }}">{% endif %}
         <div class="panel-body">
             GST Number: {{ result.gst_num }}
+            <br/>Trading Name: {{ result.trading_name }}
             <br/>Date: {{ result.date }}
             <br/>Status: {{ result.status }}
         </div>

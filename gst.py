@@ -101,7 +101,7 @@ def is_field_visible(fwdc_response, field):
     return False
 
 def parse_business_table(table_html):
-    FIELDS = ["gst_num", "name", "date", "status"]
+    FIELDS = ["gst_num", "legal_name", "trading_name", "date", "status"]
     soup = BeautifulSoup(table_html)
     rows = soup.tbody.find_all("tr", class_="DataRow", recursive=False)
     data = []
