@@ -70,22 +70,22 @@ class GST():
         return r.json()
 
     def select_gst_num_radio(self):
-        self.select_radio_button("d-3")
+        self.select_radio_button("e-3")
 
     def select_business_num_radio(self):
-        self.select_radio_button("d-6")
+        self.select_radio_button("e-6")
 
     def select_business_name_radio(self):
-        self.select_radio_button("d-8")
+        self.select_radio_button("e-8")
 
     def enter_gst_num(self, gst_num):
-        return self.enter_text_field("d-5", gst_num)
+        return self.enter_text_field("e-5", gst_num)
 
     def enter_business_num(self, business_num):
-        return self.enter_text_field("d-7", business_num)
+        return self.enter_text_field("e-7", business_num)
 
     def enter_business_name(self, business_name):
-        return self.enter_text_field("d-9", business_name)
+        return self.enter_text_field("e-9", business_name)
 
 class GSTError(Exception): pass
 
@@ -116,13 +116,13 @@ def parse_business_table(table_html):
     return data
 
 def get_table_from_response(fwdc_response):
-    field_update = find_field_update(fwdc_response, "d-g")
+    field_update = find_field_update(fwdc_response, "e-g")
     if not field_update:
-        if is_field_visible(fwdc_response, "d-j"):
+        if is_field_visible(fwdc_response, "e-j"):
             raise GSTError("No Registrants Found!")
-        elif is_field_visible(fwdc_response, "d-m"):
+        elif is_field_visible(fwdc_response, "e-m"):
             raise GSTError("Over 100 results found. Please narrow search terms!")
-        elif is_field_visible(fwdc_response, "d-o"):
+        elif is_field_visible(fwdc_response, "e-o"):
             raise GSTError("Server under maintenance. Please check back later!")
         else:
             raise GSTError("Unknown error occured!")
