@@ -47,7 +47,7 @@ class GST():
     def click_lookup_gst_status(self):
         data = {
                 'DOC_MODAL_ID__': "0",
-                'EVENT__': "b-i",
+                'EVENT__': "b-m",
                 'TYPE__': "0",
                 'CLOSECONFIRMED__': "false",
                 }
@@ -70,22 +70,22 @@ class GST():
         return r.json()
 
     def select_gst_num_radio(self):
-        self.select_radio_button("e-3")
+        self.select_radio_button("e-4")
 
     def select_business_num_radio(self):
-        self.select_radio_button("e-6")
+        self.select_radio_button("e-7")
 
     def select_business_name_radio(self):
-        self.select_radio_button("e-8")
+        self.select_radio_button("e-9")
 
     def enter_gst_num(self, gst_num):
-        return self.enter_text_field("e-5", gst_num)
+        return self.enter_text_field("e-6", gst_num)
 
     def enter_business_num(self, business_num):
-        return self.enter_text_field("e-7", business_num)
+        return self.enter_text_field("e-8", business_num)
 
     def enter_business_name(self, business_name):
-        return self.enter_text_field("e-9", business_name)
+        return self.enter_text_field("e-a", business_name)
 
 class GSTError(Exception): pass
 
@@ -116,13 +116,13 @@ def parse_business_table(table_html):
     return data
 
 def get_table_from_response(fwdc_response):
-    field_update = find_field_update(fwdc_response, "e-g")
+    field_update = find_field_update(fwdc_response, "e-h")
     if not field_update:
-        if is_field_visible(fwdc_response, "e-j"):
+        if is_field_visible(fwdc_response, "e-k"):
             raise GSTError("No Registrants Found!")
-        elif is_field_visible(fwdc_response, "e-m"):
+        elif is_field_visible(fwdc_response, "e-p"):
             raise GSTError("Over 100 results found. Please narrow search terms!")
-        elif is_field_visible(fwdc_response, "e-o"):
+        elif is_field_visible(fwdc_response, "e-s"):
             raise GSTError("Server under maintenance. Please check back later!")
         else:
             raise GSTError("Unknown error occured!")
